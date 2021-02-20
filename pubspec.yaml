@@ -1,6 +1,6 @@
 name: simple_page_indicator
 description: A new Flutter package about simple page view indicator.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/rhymelph/simple_page_indicator
 
 environment:

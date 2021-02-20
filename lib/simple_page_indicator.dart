@@ -42,7 +42,6 @@ class SimplePageIndicator extends StatelessWidget {
       index = controller.page ~/ 1;
       offset = controller.page;
     }
-
     return CustomPaint(
       size: Size(
           maxSize * _kMaxCircleCount + space * (_kMaxCircleCount - 1), maxSize),
@@ -155,6 +154,7 @@ class SimplePageIndicatorPainter extends CustomPainter {
         minSize != oldDelegate.minSize ||
         space != oldDelegate.space ||
         pageIndex != oldDelegate.pageIndex ||
+        pageOffset != oldDelegate.pageOffset ||
         isStart != oldDelegate.isStart ||
         isEnd != oldDelegate.isEnd;
   }

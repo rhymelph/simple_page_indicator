@@ -32,9 +32,9 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Color> pageList = [
     Colors.blue,
     Colors.red,
-    Colors.green,
-    Colors.black,
-    Colors.purple,
+    // Colors.green,
+    // Colors.black,
+    // Colors.purple,
   ];
 
   PageController pageController = PageController();
