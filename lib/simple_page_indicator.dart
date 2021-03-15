@@ -11,35 +11,33 @@ class SimplePageIndicator extends StatelessWidget {
   final double space;
 
   const SimplePageIndicator(
-      {Key key,
-      @required this.controller,
-      @required this.itemCount,
+      {Key? key,
+      required this.controller,
+      required this.itemCount,
       this.indicatorColor = Colors.grey,
       this.maxSize = 6,
       this.space = 14.0,
       this.minSize = 3})
-      : assert(controller != null, 'Please setting page controller'),
-        assert(itemCount != null, 'Please setting itemCount'),
-        super(key: key);
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(animation: controller, builder: _buildAnimatedItem);
   }
 
-  Widget _buildAnimatedItem(BuildContext context, Widget child) {
+  Widget _buildAnimatedItem(BuildContext context, Widget? child) {
     // return Container();
     //当前页数
     int index;
     //偏移量
-    double offset;
+    double? offset;
 
     //如果获取不了，则使用初始化的值,一般第一次渲染的时候无法获取到
     if (!controller.hasClients || controller.page == null) {
       index = controller.initialPage;
       offset = controller.initialPage.toDouble();
     } else {
-      index = controller.page ~/ 1;
+      index = controller.page! ~/ 1;
       offset = controller.page;
     }
     return CustomPaint(
@@ -52,7 +50,7 @@ class SimplePageIndicator extends StatelessWidget {
           minSize: minSize,
           pageIndex: index,
           space: space,
-          pageOffset: offset - index,
+          pageOffset: offset! - index,
           isStart:
               (offset > index) && (index + _kMaxCircleCount - 1 < itemCount),
           isEnd: index + _kMaxCircleCount - 2 >= itemCount),
@@ -63,15 +61,15 @@ class SimplePageIndicator extends StatelessWidget {
 const _kMaxCircleCount = 3;
 
 class SimplePageIndicatorPainter extends CustomPainter {
-  final int itemCount;
-  final Color indicatorColor;
-  final double maxSize;
-  final double minSize;
-  final int pageIndex;
-  final double pageOffset;
-  final double space;
-  final bool isStart;
-  final bool isEnd;
+  final int? itemCount;
+  final Color? indicatorColor;
+  final double? maxSize;
+  final double? minSize;
+  final int? pageIndex;
+  final double? pageOffset;
+  final double? space;
+  final bool? isStart;
+  final bool? isEnd;
 
   const SimplePageIndicatorPainter(
       {this.itemCount,
@@ -88,7 +86,7 @@ class SimplePageIndicatorPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     //初始化画笔
     Paint mPaint = Paint()
-      ..color = indicatorColor
+      ..color = indicatorColor!
       ..isAntiAlias = true;
 
     //获取中间的圆点为第几个
@@ -102,47 +100,47 @@ class SimplePageIndicatorPainter extends CustomPainter {
       if (pageIndex == 0 && i == 0) {
         continue;
       }
-      if (isEnd && i == _kMaxCircleCount - 1) {
+      if (isEnd! && i == _kMaxCircleCount - 1) {
         continue;
       }
       //画中心圆
       if (_centerCircleIndex == i) {
         canvas.drawCircle(
             Offset(
-                (i * childWidth) + (childWidth / 2) - childWidth * pageOffset,
+                (i * childWidth) + (childWidth / 2) - childWidth * pageOffset!,
                 childWidth / 2),
-            maxSize - (maxSize - minSize) * pageOffset,
-            mPaint..color = indicatorColor);
+            maxSize! - (maxSize! - minSize!) * pageOffset!,
+            mPaint..color = indicatorColor!);
       }
       //画左边的圆
       else if (i < _centerCircleIndex) {
         canvas.drawCircle(
             Offset(
-                (i * childWidth) + (childWidth / 2) - childWidth * pageOffset,
+                (i * childWidth) + (childWidth / 2) - childWidth * pageOffset!,
                 childWidth / 2),
-            minSize * (1 - pageOffset),
-            mPaint..color = indicatorColor.withOpacity(1 - pageOffset));
+            minSize! * (1 - pageOffset!),
+            mPaint..color = indicatorColor!.withOpacity(1 - pageOffset!));
       }
       //话右边的圆
       else {
         canvas.drawCircle(
             Offset(
-                (i * childWidth) + (childWidth / 2) - childWidth * pageOffset,
+                (i * childWidth) + (childWidth / 2) - childWidth * pageOffset!,
                 childWidth / 2),
-            minSize + (maxSize - minSize) * pageOffset,
-            mPaint..color = indicatorColor);
+            minSize! + (maxSize! - minSize!) * pageOffset!,
+            mPaint..color = indicatorColor!);
       }
     }
     //向左移的时候画后面的圆
-    if (isStart && !isEnd) {
+    if (isStart! && !isEnd!) {
       canvas.drawCircle(
           Offset(
               (_kMaxCircleCount * childWidth) +
                   (childWidth / 2) -
-                  childWidth * (pageOffset),
+                  childWidth * pageOffset!,
               childWidth / 2),
-          minSize * pageOffset,
-          mPaint..color = indicatorColor.withOpacity(pageOffset));
+          minSize! * pageOffset!,
+          mPaint..color = indicatorColor!.withOpacity(pageOffset!));
     }
   }
 
